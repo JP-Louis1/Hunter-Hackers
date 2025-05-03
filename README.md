@@ -20,7 +20,7 @@ Complete eco-friendly tasks to earn points and track your personal carbon footpr
 *Clean Living keeps you accountable and inspired to be a responsible resident of Earth.*
 
 # 🗂️ Project Structure
-`env_app/
+```env_app/
 ├───Enviromental_app_backend                  # Flask backend server
 │   ├── data                                  # JSON data files
 │   ├── venv                                  # Python virtual environment
@@ -44,4 +44,4 @@ Complete eco-friendly tasks to earn points and track your personal carbon footpr
     │   ├── Front_End_pageAPP.swift
     │
     ├── Front-End pageTests                   # Unit tests
-    ├── Front-End pageUITests                 # UI tests`
+    ├── Front-End pageUITests                 # UI tests```
