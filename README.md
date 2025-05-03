@@ -19,8 +19,8 @@ Complete eco-friendly tasks to earn points and track your personal carbon footpr
 
 *Clean Living keeps you accountable and inspired to be a responsible resident of Earth.*
 
-# 🗂️ Project Structure
-```env_app/
+## 🗂️ Project Structure
+<pre> ```plaintext env_app/
 ├───Enviromental_app_backend                  # Flask backend server
 │   ├── data                                  # JSON data files
 │   ├── venv                                  # Python virtual environment
@@ -44,4 +44,29 @@ Complete eco-friendly tasks to earn points and track your personal carbon footpr
     │   ├── Front_End_pageAPP.swift
     │
     ├── Front-End pageTests                   # Unit tests
-    ├── Front-End pageUITests                 # UI tests
+    ├── Front-End pageUITests                 # UI tests ``` </pre>
+
+## 🛠️ Installation
+### Backend (Flask)
+    1. Navigate to `Enviromental_app_backend`
+
+    2. Create and activate a virtual environment:
+
+    <pre> ```bash python -m venv venv source venv/bin/activate # or venv\Scripts\activate on Windows ``` </pre>
+
+    3. Install dependencies:
+    <pre> ```bash pip install -r requirements.txt ``` </pre>
+    
+    4. Run the Flask app:
+
+    <pre> ```bash python python-backend-main.py ``` </pre>
+### Frontend (SwiftUI)
+Open the Front-End page directory in Xcode.
+
+Build and run the app on a simulator or device.
+
+💬 Contributing
+Pull requests are welcome! If you’d like to contribute, please fork the repo and submit a PR. Be sure to follow good commit message practices and keep your code clean.
+
+📄 License
+This project is licensed under the MIT License.
