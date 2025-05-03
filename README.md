@@ -56,7 +56,7 @@ Complete eco-friendly tasks to earn points and track your personal carbon footpr
 ```bash
 python -m venv venv
 source venv/bin/activate  # or venv\Scripts\activate on Windows
-
+```
 3. Install dependencies:
 
 ```bash
