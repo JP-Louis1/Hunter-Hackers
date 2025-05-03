@@ -48,7 +48,7 @@ Complete eco-friendly tasks to earn points and track your personal carbon footpr
 
 ## 🛠️ Installation
 ### Backend (Flask)
-    1. Navigate to `Enviromental_app_backend`
+    1. Navigate to Enviromental_app_backend
 
     2. Create and activate a virtual environment:
 
