@@ -48,11 +48,14 @@ Complete eco-friendly tasks to earn points and track your personal carbon footpr
 
 ## 🛠️ Installation
 ### Backend (Flask)
-    1. Navigate to Enviromental_app_backend
 
-    2. Create and activate a virtual environment:
+1. Navigate to `Enviromental_app_backend`
 
-    <pre> ```bash python -m venv venv source venv/bin/activate # or venv\Scripts\activate on Windows ``` </pre>
+2. Create and activate a virtual environment:
+
+```bash
+python -m venv venv
+source venv/bin/activate  # or venv\Scripts\activate on Windows
 
     3. Install dependencies:
     <pre> ```bash pip install -r requirements.txt ``` </pre>
