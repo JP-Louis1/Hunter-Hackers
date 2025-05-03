@@ -71,12 +71,12 @@ python python-backend-main.py
 ```
 
 ### Frontend (SwiftUI)
-Open the Front-End page directory in Xcode.
+1. Open the `Front-End page` directory in Xcode.
 
-Build and run the app on a simulator or device.
+2. Build and run the app on a simulator or device.
 
-💬 Contributing
+## 💬 Contributing
 Pull requests are welcome! If you’d like to contribute, please fork the repo and submit a PR. Be sure to follow good commit message practices and keep your code clean.
 
-📄 License
+## 📄 License
 This project is licensed under the MIT License.
