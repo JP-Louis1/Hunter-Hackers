@@ -57,12 +57,16 @@ Complete eco-friendly tasks to earn points and track your personal carbon footpr
 python -m venv venv
 source venv/bin/activate  # or venv\Scripts\activate on Windows
 
-    3. Install dependencies:
-    <pre> ```bash pip install -r requirements.txt ``` </pre>
-    
-    4. Run the Flask app:
+3. Install dependencies:
 
-    <pre> ```bash python python-backend-main.py ``` </pre>
+```bash
+pip install -r requirements.txt
+    
+4. Run the Flask app:
+
+```bash
+python python-backend-main.py
+
 ### Frontend (SwiftUI)
 Open the Front-End page directory in Xcode.
 
