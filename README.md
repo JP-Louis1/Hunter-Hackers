@@ -1,5 +1,6 @@
 # 🌍 Clean Living
 **Have you ever wondered how the area you're standing in contributes to climate change?**
+
 Do you want to feel motivated to make a difference in the climate crisis through simple daily actions?
 
 **Look no further than *Clean Living*** — an app designed to keep you informed and active in combating climate change every day.
