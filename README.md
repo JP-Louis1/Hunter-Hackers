@@ -44,4 +44,4 @@ Complete eco-friendly tasks to earn points and track your personal carbon footpr
     │   ├── Front_End_pageAPP.swift
     │
     ├── Front-End pageTests                   # Unit tests
-    ├── Front-End pageUITests                 # UI tests```
+    ├── Front-End pageUITests                 # UI tests
