@@ -168,7 +168,7 @@ class AirQualityMonitor:
                     address = location.raw['address']
                     city_name = address.get('city', address.get('town', address.get('village', "Unknown")))
 
-                # 
+                # Return a dictionary of all the city AQI information
                 return {
                     "status": status_color.get(status, "yellow"),
                     "aqi_value": aqi,
@@ -190,12 +190,14 @@ class AirQualityMonitor:
             "city": "Unknown",
             "details": f"The air quality in your area is estimated to be {status}."
         }
+
     
     def get_all_cities_data(self):
         # In a real app, we would update pollution data from the API
         # For demo purposes, randomize statuses
         updated_cities = []
-        
+
+        # Loop through cities and update pollution status/colors
         for city in self.cities_data['cities']:
             statuses = ["green", "yellow", "red"]
             weights = [0.4, 0.4, 0.2]  # 40% good, 40% moderate, 20% bad
