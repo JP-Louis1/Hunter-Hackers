@@ -16,11 +16,14 @@ DATA_DIR = 'data'  # Directory to store all JSON data files
 os.makedirs(DATA_DIR, exist_ok=True)
 
 
-class EnvironmentalNotificationsManager:    
+class EnvironmentalNotificationsManager:
+    # Initiate file and its data for environmental notifications in constructor
     def __init__(self):
         self.notifications_file = os.path.join(DATA_DIR, 'notifications.json')
         self.notifications_data = self._load_notifications()
-    
+
+    # Attempt to open JSON file that contains notification data
+    # If not found, create the file and store the notification data in it
     def _load_notifications(self):
         try:
             with open(self.notifications_file, 'r') as file:
@@ -62,18 +65,22 @@ class EnvironmentalNotificationsManager:
             }
             self._save_data(default_data)
             return default_data
-    
+
+    # Store the notification data into the file
     def _save_data(self, data):
         with open(self.notifications_file, 'w') as file:
             json.dump(data, file, indent=4)
-    
+
+    # Choose a random notification to return to the user
+    # If there is no notification data, return a default notification
     def get_random_notification(self):
         if self.notifications_data and 'notifications' in self.notifications_data:
             return {
                 "notification": random.choice(self.notifications_data['notifications'])
             }
         return {"notification": "Please help protect our environment today!"}
-    
+
+    # Add a new notificataion to the notification data dictionary and save it to the notifications file
     def add_notification(self, message):
         if message and isinstance(message, str):
             self.notifications_data['notifications'].append(message)
@@ -83,11 +90,13 @@ class EnvironmentalNotificationsManager:
 
 
 class AirQualityMonitor:
-    
+    # Initiate file and its data for cities' air quality information in constructor
     def __init__(self):
         self.cities_file = os.path.join(DATA_DIR, 'cities_pollution.json')
         self.cities_data = self._load_cities_data()
-    
+
+    # Attempt to open JSON file that contains air quality data
+    # If not found, create the file and store the cities' air quality data in it
     def _load_cities_data(self):
         try:
             with open(self.cities_file, 'r') as file:
@@ -109,11 +118,13 @@ class AirQualityMonitor:
             }
             self._save_data(default_cities)
             return default_cities
-    
+            
+    # Store the air quality data into the file
     def _save_data(self, data):
         with open(self.cities_file, 'w') as file:
             json.dump(data, file, indent=4)
-    
+
+    # Depending on the numerical AQI value, return a status for the air quality
     def _get_aqi_status(self, aqi):
         if aqi == 1:
             return "good"
@@ -125,16 +136,17 @@ class AirQualityMonitor:
             return "poor"
         else:  # aqi == 5
             return "very poor"
-    
+    # Use API to fetch current air quality data
     def get_local_air_quality(self, lat, lon):
         try:
+            # Access API using lat, lon, and key
             url = f"http://api.openweathermap.org/data/2.5/air_pollution?lat={lat}&lon={lon}&appid={API_KEY}"
             response = requests.get(url)
             data = response.json()
             
             if response.status_code == 200 and 'list' in data and data['list']:
-                aqi = data['list'][0]['main']['aqi']  # AQI value (1-5)
-                status = self._get_aqi_status(aqi)
+                aqi = data['list'][0]['main']['aqi']  # Fetch the AQI value (1-5) of the given location (lat, lon) from the API
+                status = self._get_aqi_status(aqi) # Determine the AQI status based on the value
                 
                 # Map AQI to status colors
                 status_color = {
@@ -145,10 +157,11 @@ class AirQualityMonitor:
                     "very poor": "red"
                 }
                 
-                # Get city name if possible
+                # Get city name if possible through reverse geocoding using Nominatim API
                 geolocator = Nominatim(user_agent="eco_tracker")
                 location = geolocator.reverse(f"{lat}, {lon}", language='en')
                 city_name = "Unknown"
+
                 
                 if location and 'address' in location.raw:
                     address = location.raw['address']
