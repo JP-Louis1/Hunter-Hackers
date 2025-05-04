@@ -136,6 +136,7 @@ class AirQualityMonitor:
             return "poor"
         else:  # aqi == 5
             return "very poor"
+            
     # Use API to fetch current air quality data
     def get_local_air_quality(self, lat, lon):
         try:
@@ -162,11 +163,12 @@ class AirQualityMonitor:
                 location = geolocator.reverse(f"{lat}, {lon}", language='en')
                 city_name = "Unknown"
 
-                # If 
+                # If location is found, determine the city name and save it
                 if location and 'address' in location.raw:
                     address = location.raw['address']
                     city_name = address.get('city', address.get('town', address.get('village', "Unknown")))
-                
+
+                # 
                 return {
                     "status": status_color.get(status, "yellow"),
                     "aqi_value": aqi,
