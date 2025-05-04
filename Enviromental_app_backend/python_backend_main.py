@@ -190,7 +190,6 @@ class AirQualityMonitor:
             "city": "Unknown",
             "details": f"The air quality in your area is estimated to be {status}."
         }
-
     
     def get_all_cities_data(self):
         # In a real app, we would update pollution data from the API
@@ -210,16 +209,19 @@ class AirQualityMonitor:
         
         return {"cities": updated_cities}
 
-
 class PersonalEcoTracker:
-    
+
+    # Initialize files to store user info and their daily action info
     def __init__(self):
         self.user_info_file = os.path.join(DATA_DIR, 'user_info.json')
         self.actions_file = os.path.join(DATA_DIR, 'eco_actions.json')
         
         self.users_data = self._load_user_data()
         self.actions_data = self._load_actions_data()
-    
+
+    # Attempt to open JSON file that contains user data
+    # If not found, create the file and store user data in it
+    # Create new user if necessary
     def _load_user_data(self):
         try:
             with open(self.user_info_file, 'r') as file:
@@ -229,7 +231,8 @@ class PersonalEcoTracker:
             default_data = {'users': {}}
             self._save_user_data(default_data)
             return default_data
-    
+    # Attempt to open JSON file that contains user action data
+    # If not found, create the file and store new default actions in it
     def _load_actions_data(self):
         try:
             with open(self.actions_file, 'r') as file:
@@ -241,15 +244,18 @@ class PersonalEcoTracker:
             default_data = {'actions': self._get_default_actions()}
             self._save_actions_data(default_data)
             return default_data
-    
+
+    # Store the user data into the file
     def _save_user_data(self, data=None):
         with open(self.user_info_file, 'w') as file:
             json.dump(data if data else self.users_data, file, indent=4)
-    
+
+    # Store the action data into the file
     def _save_actions_data(self, data=None):
         with open(self.actions_file, 'w') as file:
             json.dump(data if data else self.actions_data, file, indent=4)
-    
+
+    # Return list of dictionary of default actions and associated details
     def _get_default_actions(self):
         return [
             {"id": 1, "description": "Use reusable shopping bags", "points": 5, "details": "Saves 500 plastic bags per year"},
@@ -273,7 +279,8 @@ class PersonalEcoTracker:
             {"id": 19, "description": "Bought local produce from farmers market", "points": 8, "details": "Reduces transportation emissions and supports local economy"},
             {"id": 20, "description": "Used reusable bags for all shopping today", "points": 6, "details": "Prevents single-use plastic bag waste"}
         ]
-    
+
+    # Create/initialize a new user
     def init_user(self, user_id):
         if user_id not in self.users_data['users']:
             self.users_data['users'][user_id] = {
@@ -287,23 +294,23 @@ class PersonalEcoTracker:
             self._save_user_data()
             return {"success": True, "message": "User initialized successfully"}
         return {"success": True, "message": "User already exists"}
-    
+
     def get_daily_task(self, user_id):
-        ## Initialize user if not already initialized
+        # Initialize user if not already initialized
         self.init_user(user_id)
         user = self.users_data['users'][user_id]
         
         today = datetime.now().date()
         last_updated = datetime.strptime(user['last_updated'], '%Y-%m-%d').date()
         
-        ## Reset task if it's a new day or no task exists
+        # Reset task if it's a new day or no task exists
         if today > last_updated or user['daily_task'] is None:
             available = [
                 a for a in self.actions_data['actions'] 
                 if a['id'] in user['pending_actions']
             ]
             
-            ## Make sure there are available tasks
+            # Make sure there are available tasks
             if available:
                 ## Select just one random task
                 selected = random.choice(available)
@@ -311,10 +318,10 @@ class PersonalEcoTracker:
                 user['last_updated'] = today.strftime('%Y-%m-%d')
                 self._save_user_data()
             else:
-                ## If no pending tasks, return a message
+                # If no pending tasks, return a message
                 return {"task": None, "message": "No pending tasks available"}
         
-        ## Return the full action object for the selected task ID
+        # Return the full action object for the selected task ID
         task = None
         for action in self.actions_data['actions']:
             if action['id'] == user['daily_task']:
@@ -392,7 +399,8 @@ class PersonalEcoTracker:
             'daily_task': daily_task,
             'location': user['location']
         }
-    
+
+    # Assign a location to the user's instance
     def set_user_location(self, user_id, latitude, longitude):
         self.init_user(user_id)
         self.users_data['users'][user_id]['location'] = {
@@ -434,11 +442,13 @@ class PersonalEcoTracker:
 
 
 class EnvironmentalTipsManager:
-    
+    # Initiate file and its data for environmental tips in constructor
     def __init__(self):
         self.tips_file = os.path.join(DATA_DIR, 'environmental_tips.json')
         self.tips_data = self._load_tips_data()
-    
+
+    # Attempt to open JSON file that contains enviromental tips data
+    # If not found, create the file and store the environmental tips data in it
     def _load_tips_data(self):
         try:
             with open(self.tips_file, 'r') as file:
@@ -482,18 +492,18 @@ class EnvironmentalTipsManager:
             return default_tips
     
     def _save_data(self, data):
-        ## Save tips data to file
+        # Save tips data to file
         with open(self.tips_file, 'w') as file:
             json.dump(data, file, indent=4)
     
     def get_random_tip(self):
-        ## Get a single random environmental tip
+        # Get a single random environmental tip
         if self.tips_data and 'tips' in self.tips_data and self.tips_data['tips']:
             return {"tip": random.choice(self.tips_data['tips'])}
         return {"tip": "No tips available."}
     
     def add_tip(self, tip):
-        ## Add a new environmental tip
+        # Add a new environmental tip
         if tip and isinstance(tip, str):
             self.tips_data['tips'].append(tip)
             self._save_data(self.tips_data)
@@ -510,7 +520,7 @@ tips_manager = EnvironmentalTipsManager()
 # Flask routes
 @app.route('/')
 def home():
-    ## This has all of the api information
+    # This has all of the API information
     return jsonify({
         "message": "Welcome to the EcoTracker API",
         "endpoints": {
@@ -528,12 +538,12 @@ def home():
 # Notifications routes
 @app.route('/api/notifications/random', methods=['GET'])
 def get_random_notification():
-    ## Gets a random environmental notification
+    # Gets a random environmental notification
     return jsonify(notifications_manager.get_random_notification())
 
 @app.route('/api/notifications/add', methods=['POST'])
 def add_notification():
-    ## Adds a new notification
+    # Adds a new notification
     data = request.get_json()
     message = data.get('message')
     return jsonify(notifications_manager.add_notification(message))
@@ -541,12 +551,12 @@ def add_notification():
 # Tips routes
 @app.route('/api/tips/random', methods=['GET'])
 def get_random_tip():
-    ## Gets a random environmental tip
+    # Gets a random environmental tip
     return jsonify(tips_manager.get_random_tip())
 
 @app.route('/api/tips/add', methods=['POST'])
 def add_tip():
-    ## Creates a new environmental tip
+    # Creates a new environmental tip
     data = request.get_json()
     tip = data.get('tip')
     return jsonify(tips_manager.add_tip(tip))
@@ -554,7 +564,7 @@ def add_tip():
 # Air quality routes
 @app.route('/api/pollution', methods=['GET'])
 def get_pollution():
-    ## Gets the pollution data for a given location
+    # Gets the pollution data for a given location
     lat = request.args.get('lat', type=float)
     lon = request.args.get('lon', type=float)
     
@@ -572,13 +582,13 @@ def get_pollution():
 
 @app.route('/api/cities', methods=['GET'])
 def get_cities_data():
-    ## This gets pollution data from different cities
+    # This gets pollution data from different cities
     return jsonify(air_quality_monitor.get_all_cities_data())
 
 # User eco-tracking routes
 @app.route('/api/user/init', methods=['POST'])
 def init_user():
-    ## Creates a new user id
+    # Creates a new user id
     data = request.get_json()
     user_id = data.get('user_id')
     
@@ -589,7 +599,7 @@ def init_user():
 
 @app.route('/api/user/task', methods=['GET'])
 def get_user_task():
-    ## Gets a single daily task for a user
+    # Gets a single daily task for a user
     user_id = request.args.get('user_id')
     
     if not user_id:
@@ -599,7 +609,7 @@ def get_user_task():
 
 @app.route('/api/user/complete', methods=['POST'])
 def complete_user_task():
-    ## This changes if a task is completed by a user
+    # This changes if a task is completed by a user
     data = request.get_json()
     user_id = data.get('user_id')
     action_id = data.get('action_id')
@@ -611,7 +621,7 @@ def complete_user_task():
 
 @app.route('/api/user/stats', methods=['GET'])
 def get_user_stats():
-    ## This function returns a json object with the user stats
+    # This function returns a json object with the user stats
     user_id = request.args.get('user_id')
     
     if not user_id:
@@ -621,7 +631,7 @@ def get_user_stats():
 
 @app.route('/api/user/location', methods=['POST'])
 def set_user_location():
-    ## This function would set the user location based on the user_id, lat and long values
+    # This function would set the user location based on the user_id, lat and long values
     data = request.get_json()
     user_id = data.get('user_id')
     latitude = data.get('latitude')
@@ -634,12 +644,12 @@ def set_user_location():
 
 @app.route('/api/actions', methods=['GET'])
 def get_all_actions():
-    ## Returns all of the eco-friendly actions that a user can perform
+    # Returns all of the eco-friendly actions that a user can perform
     return jsonify({"actions": eco_tracker.actions_data['actions']})
 
 @app.route('/api/actions/add', methods=['POST'])
 def add_new_action():
-    ## This function would create an eco-friendly action and then add it 
+    # This function would create an eco-friendly action and then add it 
     data = request.get_json()
     description = data.get('description')
     points = data.get('points', 5)
