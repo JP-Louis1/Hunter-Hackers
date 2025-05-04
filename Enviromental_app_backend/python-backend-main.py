@@ -634,5 +634,5 @@ def add_new_action():
     return jsonify(eco_tracker.add_new_action(description, points, details))
 
 if __name__ == '__main__':
-    os.makedirs(DATA_DIR, exist_ok=True)
-    app.run(debug=True, host='0.0.0.0', port=5000)
+    port = int(os.environ.get("Port", 4000))
+    app.run(debug=True, host='0.0.0.0', port=port)
