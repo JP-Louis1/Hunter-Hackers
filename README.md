@@ -18,7 +18,7 @@ View a 2D map where pollution levels are color-coded — from red (high pollutio
 ### ✅ Daily Sustainable Goals
 Complete eco-friendly tasks to earn points and track your personal carbon footprint.
 
-*Clean Living keeps you accountable and inspired to be a responsible resident of Earth.*
+*Clean Living keeps you actively accountable and inspired to be a responsible resident of Earth.*
 
 ## 🗂️ Project Structure
 <pre> ```plaintext env_app/
