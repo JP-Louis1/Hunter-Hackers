@@ -162,7 +162,7 @@ class AirQualityMonitor:
                 location = geolocator.reverse(f"{lat}, {lon}", language='en')
                 city_name = "Unknown"
 
-                
+                # If 
                 if location and 'address' in location.raw:
                     address = location.raw['address']
                     city_name = address.get('city', address.get('town', address.get('village', "Unknown")))
