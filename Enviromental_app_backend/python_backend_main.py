@@ -114,7 +114,7 @@ class AirQualityMonitor:
                     {"name": "San Diego", "status": "green", "latitude": 32.7157, "longitude": -117.1611},
                     {"name": "Dallas", "status": "yellow", "latitude": 32.7767, "longitude": -96.7970},
                     {"name": "San Jose", "status": "green", "latitude": 37.3382, "longitude": -121.8863}
-                ]
+                ] 
             }
             self._save_data(default_cities)
             return default_cities
